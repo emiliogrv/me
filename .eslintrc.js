@@ -4,20 +4,18 @@ module.exports = {
     browser: true,
     node: true
   },
-  globals: {
-    chrome: true,
-    cast: true
-  },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: '@babel/eslint-parser',
+    requireConfigFile: false
   },
-  extends: ['eslint:recommended', 'plugin:vue/recommended'],
+  extends: ['@nuxtjs', 'plugin:nuxt/recommended'],
   plugins: [],
   // add your custom rules here
   rules: {
     'block-spacing': ['error', 'always'],
     'comma-dangle': ['error', 'never'],
     'dot-location': ['error', 'property'],
+    'jsx-quotes': ['error', 'prefer-double'],
     'key-spacing': 2,
     'keyword-spacing': 2,
     'lines-between-class-members': ['error', 'always'],
@@ -25,17 +23,48 @@ module.exports = {
     'no-const-assign': 2,
     'no-debugger': 2,
     'no-dupe-args': 2,
+    'no-dupe-else-if': 2,
     'no-dupe-keys': 2,
     'no-empty-pattern': 2,
     'no-eq-null': 2,
     'no-irregular-whitespace': 2,
     'no-mixed-operators': 2,
+    'no-multiple-empty-lines': [
+      'error',
+      {
+        max: 1,
+        maxEOF: 1
+      }
+    ],
     'no-trailing-spaces': 2,
     'no-unreachable': 2,
     'no-unused-vars': 2,
     'no-var': 2,
+    'object-property-newline': 2,
     'padded-blocks': ['error', 'never'],
-    'padding-line-between-statements': 2,
+    'padding-line-between-statements': [
+      'error',
+      {
+        blankLine: 'always',
+        prev: '*',
+        next: 'return'
+      },
+      {
+        blankLine: 'always',
+        prev: ['const', 'let', 'var'],
+        next: '*'
+      },
+      {
+        blankLine: 'any',
+        prev: ['const', 'let', 'var'],
+        next: ['const', 'let', 'var']
+      },
+      {
+        blankLine: 'always',
+        prev: ['import'],
+        next: ['const', 'let', 'var', 'export']
+      }
+    ],
     'prefer-const': 2,
     'prefer-object-spread': 2,
     'vue/attribute-hyphenation': 2,
@@ -43,6 +72,15 @@ module.exports = {
       'error',
       {
         alphabetical: true
+      }
+    ],
+
+    'vue/block-tag-newline': [
+      'error',
+      {
+        singleline: 'always',
+        multiline: 'always',
+        maxEmptyLines: 0
       }
     ],
     'vue/camelcase': 2,
@@ -53,20 +91,40 @@ module.exports = {
         order: ['template', 'script', 'style']
       }
     ],
+    'vue/custom-event-name-casing': [
+      'error',
+      'kebab-case',
+      {
+        ignores: []
+      }
+    ],
     'vue/dot-location': ['error', 'property'],
     'vue/eqeqeq': ['error', 'always'],
     'vue/html-closing-bracket-spacing': 2,
+    'vue/html-comment-content-spacing': [
+      'error',
+      'always',
+      {
+        exceptions: []
+      }
+    ],
+    'vue/html-end-tags': 2,
     'vue/html-indent': 2,
     'vue/html-quotes': 2,
     'vue/key-spacing': 2,
     'vue/keyword-spacing': 2,
-    'vue/match-component-file-name': [
+    'vue/max-attributes-per-line': [
       'error',
       {
-        extensions: ['vue'],
-        shouldMatchCase: false
+        singleline: {
+          max: 1
+        },
+        multiline: {
+          max: 1
+        }
       }
     ],
+    'vue/multi-word-component-names': ['error'],
     'vue/multiline-html-element-content-newline': 2,
     'vue/mustache-interpolation-spacing': 2,
     'vue/no-async-in-computed-properties': 2,
@@ -76,10 +134,12 @@ module.exports = {
         groups: []
       }
     ],
+    'vue/no-dupe-v-else-if': 2,
     'vue/no-duplicate-attributes': 2,
     'vue/no-empty-pattern': 2,
     'vue/no-irregular-whitespace': 2,
     'vue/no-multi-spaces': 2,
+    'vue/no-mutating-props': 2,
     'vue/no-parsing-error': 2,
     'vue/no-reserved-component-names': 2,
     'vue/no-reserved-keys': [
@@ -89,8 +149,8 @@ module.exports = {
         groups: []
       }
     ],
-    'vue/no-side-effects-in-computed-properties': 2,
     'vue/no-shared-component-data': 2,
+    'vue/no-side-effects-in-computed-properties': 2,
     'vue/no-spaces-around-equal-signs-in-attribute': ['error'],
     'vue/no-static-inline-styles': 2,
     'vue/no-template-key': 2,
@@ -98,6 +158,7 @@ module.exports = {
     'vue/no-unused-components': 2,
     'vue/no-unused-vars': 2,
     'vue/no-use-v-if-with-v-for': 2,
+    'vue/no-useless-template-attributes': 2,
     'vue/no-v-html': 'off',
     'vue/order-in-components': 2,
     'vue/padding-line-between-blocks': 2,
@@ -108,6 +169,7 @@ module.exports = {
     'vue/require-name-property': 2,
     'vue/require-prop-type-constructor': 2,
     'vue/require-prop-types': 2,
+    'vue/require-render-return': 2,
     'vue/require-valid-default-prop': 2,
     'vue/return-in-computed-property': 2,
     'vue/static-class-names-order': 2,
