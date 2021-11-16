@@ -1,17 +1,32 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
+  <v-col>
+    <v-row
+      justify="center"
+      no-gutters
+    >
+      <h1>
+        {{ error.statusCode }}
+      </h1>
+    </v-row>
 
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
+    <v-row
+      justify="center"
+      no-gutters
+    >
+      <h2>
+        {{ error.statusCode === 404 ? pageNotFound : otherError }}
+      </h2>
+    </v-row>
 
-    <NuxtLink to="/">
-      Home
-    </NuxtLink>
-  </v-app>
+    <v-row
+      justify="center"
+      no-gutters
+    >
+      <NuxtLink to="/">
+        Home
+      </NuxtLink>
+    </v-row>
+  </v-col>
 </template>
 
 <script>
@@ -28,7 +43,7 @@ export default {
   },
   data () {
     return {
-      pageNotFound: '404 Not Found',
+      pageNotFound: 'Not Found',
       otherError: 'An error occurred'
     }
   },
@@ -37,14 +52,24 @@ export default {
       this.error.statusCode === 404 ? this.pageNotFound : this.otherError
 
     return {
-      title
+      title,
+      link: [
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.googleapis.com'
+        },
+        {
+          rel: 'preconnect',
+          crossorigin: true,
+          href: 'https://fonts.googleapis.com'
+        },
+        {
+          rel: 'stylesheet',
+          crossorigin: true,
+          href: 'https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap'
+        }
+      ]
     }
   }
 }
 </script>
-
-<style scoped>
-h1 {
-  font-size: 20px;
-}
-</style>
