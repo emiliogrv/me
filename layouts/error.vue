@@ -1,31 +1,16 @@
 <template>
-  <v-col>
-    <v-row
-      justify="center"
-      no-gutters
-    >
-      <h1>
-        {{ error.statusCode }}
-      </h1>
-    </v-row>
+  <v-col class="text-center">
+    <h1>
+      {{ error.statusCode }}
+    </h1>
 
-    <v-row
-      justify="center"
-      no-gutters
-    >
-      <h2>
-        {{ error.statusCode === 404 ? pageNotFound : otherError }}
-      </h2>
-    </v-row>
+    <h2>
+      {{ error.statusCode === 404 ? pageNotFound : otherError }}
+    </h2>
 
-    <v-row
-      justify="center"
-      no-gutters
-    >
-      <NuxtLink to="/">
-        Home
-      </NuxtLink>
-    </v-row>
+    <NuxtLink to="/">
+      Home
+    </NuxtLink>
   </v-col>
 </template>
 
@@ -33,20 +18,20 @@
 export default {
   name: 'ErrorLayout',
 
-  layout: 'empty',
-
   props: {
     error: {
       type: Object,
       default: null
     }
   },
+
   data () {
     return {
       pageNotFound: 'Not Found',
       otherError: 'An error occurred'
     }
   },
+
   head () {
     const title =
       this.error.statusCode === 404 ? this.pageNotFound : this.otherError
@@ -65,7 +50,6 @@ export default {
         },
         {
           rel: 'stylesheet',
-          crossorigin: true,
           href: 'https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap'
         }
       ]
@@ -73,3 +57,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+h1,
+h2 {
+  font-family: 'Roboto Mono', monospace;
+}
+</style>
