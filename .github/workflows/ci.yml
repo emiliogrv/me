@@ -20,8 +20,13 @@ jobs:
         node: [14]
 
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout 🛎
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Setup node env 🏗
         uses: actions/setup-node@v2.5.1
