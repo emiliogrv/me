@@ -10,21 +10,20 @@ on:
       - main
       - master
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  ci:
+  cache:
     runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        node: [14]
+        os: [ ubuntu-latest ]
+        node: [ 14 ]
 
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
-        with:
-          access_token: ${{ github.token }}
-
       - name: Checkout 🛎
         uses: actions/checkout@v3
 
@@ -46,10 +45,35 @@ jobs:
         run: yarn install
 
       - name: Run build 🏰
-        run: yarn generate
+        run: yarn build
 
-      - name: Run linter 👀
-        run: yarn lint
+  ci:
+    needs: cache
 
-      - name: Run tests 🧪
-        run: yarn test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        node: [ 14 ]
+        script: [ 'lint', 'test' ]
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v3
+
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          check-latest: true
+
+      - name: Cache node_modules 📦
+        uses: actions/cache@v3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Run ${{ matrix.script }}
+        run: yarn ${{ matrix.script }}
