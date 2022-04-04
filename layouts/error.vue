@@ -1,24 +1,22 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
+  <v-col class="text-center">
+    <h1>
+      {{ error.statusCode }}
     </h1>
 
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
+    <h2>
+      {{ error.statusCode === 404 ? pageNotFound : otherError }}
+    </h2>
 
     <NuxtLink to="/">
       Home
     </NuxtLink>
-  </v-app>
+  </v-col>
 </template>
 
 <script>
 export default {
   name: 'ErrorLayout',
-
-  layout: 'empty',
 
   props: {
     error: {
@@ -26,25 +24,43 @@ export default {
       default: null
     }
   },
+
   data () {
     return {
-      pageNotFound: '404 Not Found',
+      pageNotFound: 'Not Found',
       otherError: 'An error occurred'
     }
   },
+
   head () {
     const title =
       this.error.statusCode === 404 ? this.pageNotFound : this.otherError
 
     return {
-      title
+      title,
+      link: [
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.googleapis.com'
+        },
+        {
+          rel: 'preconnect',
+          crossorigin: true,
+          href: 'https://fonts.googleapis.com'
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap'
+        }
+      ]
     }
   }
 }
 </script>
 
 <style scoped>
-h1 {
-  font-size: 20px;
+h1,
+h2 {
+  font-family: 'Roboto Mono', monospace;
 }
 </style>
