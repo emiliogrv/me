@@ -60,7 +60,7 @@
     "eslint-plugin-vue": "^8.7.1",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
-    "js-beautify": "^1.14.2",
+    "js-beautify": "^1.14.3",
     "lint-staged": "^12.4.1",
     "node-sass": "^7.0.1",
     "prettier": "^2.6.2",
